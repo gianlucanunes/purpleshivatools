@@ -1,0 +1,101 @@
+estrutura base para o desenvolvimento das ferramentas:
+
+#!/usr/bin/env python3
+# ICMP PING SWEEP
+
+#IMPORTS -----------------------------------------------------------------------------------------------------------------
+import logging
+import os
+import sys
+import time
+import threading
+import json
+import csv
+import ipaddress
+import argparse
+import xml.etree.ElementTree as ET
+from datetime import datetime
+from typing import List, Dict, Tuple, Any, Optional  # Adicionado tipagem
+from scapy.all import IP, ICMP, sr1
+from concurrent.futures import ThreadPoolExecutor
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import BaseDocTemplate, Frame, PageTemplate, Paragraph, Spacer, Table, TableStyle, KeepTogether
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib import colors
+from reportlab.graphics.shapes import Drawing, Line
+
+#COLORS -----------------------------------------------------------------------------------------------------------------
+class Colors:
+    #Classe para organizar cores ANSI em tons de roxo
+    RESET = "\033[0m"
+    BOLD = "\033[1m"
+    PURPLE_DARK = "\033[38;5;54m"  # Roxo escuro
+    PURPLE = "\033[38;5;93m"      # Roxo médio
+    PURPLE_LIGHT = "\033[38;5;141m"  # Roxo claro
+    LAVENDER = "\033[38;5;183m"    # Lavanda
+    RED = "\033[31m"               # Vermelho para erros
+    YELLOW = "\033[33m"            # Amarelo para avisos
+    
+    # Cores para bordas de tabelas
+    TABLE_BORDER = "\033[38;5;147m"  # Lavanda mais claro para bordas
+    TABLE_HEADER_BG = "\033[48;5;54m"  # Fundo roxo escuro para cabeçalhos
+    TABLE_HEADER_FG = "\033[38;5;255m"  # Texto branco para cabeçalhos
+
+def setup_logging():    
+    return log_dir
+
+LOG_DIR = setup_logging()
+logger = logging.getLogger(__name__)
+
+class ScanProgress:
+    def __init__(self):
+
+    def update_timer(self, start_time: float) -> None:
+
+scan_progress = ScanProgress()
+
+class SecurityRecommendations:
+    
+    @classmethod
+    def get_recommendations(cls, severity: str = None) -> List[Dict[str, Any]]:
+    
+def ValidateIpRange(inputRange: str) -> Tuple[bool, str]:
+
+def ValidateReportFormat(formatStr: str) -> Tuple[bool, str]:
+
+class HelpText:
+
+def parse_targets(input_str: str) -> List[ipaddress.IPv4Address]:
+
+def scan_host(ip_address: ipaddress.IPv4Address) -> Tuple[str, bool]:
+
+def ping_sweep(ip_range_str: str) -> List[Dict[str, str]]:
+    
+def print_hosts(hosts: List[Dict[str, str]]) -> None:
+
+def write_csv(filepath: str, hosts: List[Dict[str, str]]) -> None:
+
+def write_json(filepath: str, hosts: List[Dict[str, str]]) -> None:
+
+def write_xml(filepath: str, hosts: List[Dict[str, str]]) -> None:
+   
+def write_pdf(filepath: str, hosts: List[Dict[str, str]]) -> None:      
+
+def write_logs(hosts: List[Dict[str, str]], fmt: str) -> None:
+
+class Menu:
+    
+    def __init__(self, args=None):   
+        
+    def displayInputError(self, message: str) -> None:
+        
+    def display(self) -> None:
+
+    def start_scan(self) -> None:
+            
+    def run(self) -> None:
+      
+def main():
+
+if __name__ == "__main__":
+    main()
