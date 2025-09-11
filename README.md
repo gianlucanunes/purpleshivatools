@@ -52,7 +52,7 @@ This repository will be updated as the project progresses.
 
 <p align="center">
   <img src="main-menu.png" alt="main menu" width="400">
-  <img src="ping-sweep.png" alt="ping sweep" width="400">
+  <img src="selecting-tool.png" alt="selecting tool" width="400">
 </p>
 
 &nbsp;
