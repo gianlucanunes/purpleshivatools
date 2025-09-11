@@ -1,4 +1,4 @@
-![Logo](logo-white.png)
+<img src="logo-white.png" alt="logo" width="400">
 
 &nbsp;
 
@@ -48,8 +48,8 @@ This repository will be updated as the project progresses.
 
 # SCREENSHOTS
 
-![Main Menu](main-menu.png)  
-![Ping Sweep](ping-sweep.png)
+<img src="main-menu.png" alt="main menu" width="400">
+<img src="ping-sweep.png" alt="ping wweep" height="400">
 
 &nbsp;
 
