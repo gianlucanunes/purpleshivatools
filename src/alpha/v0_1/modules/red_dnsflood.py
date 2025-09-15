@@ -207,5 +207,3 @@ def main():
 if __name__ == "__main__":
     main()
 
-
-#apesar dele mandar quantidades astronomicas de requisições dns, não parece ser suficiente para travar totalmente uma rede.

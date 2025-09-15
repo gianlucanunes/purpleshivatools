@@ -22,7 +22,7 @@ from rich.live import Live
 import keyboard
 
 # Version info
-VERSION = "0.2"
+VERSION = "0.3"
 REPO_URL = "https://github.com/PurpleShivaTeam/purpleshivatools"
 
 console = Console()
@@ -111,7 +111,7 @@ def print_banner():
         b = Text(justify="center")
         b.append("Version: ", style="bold cyan"); b.append(f"{VERSION}\n", style="bold green")
         b.append("Repo: ", style="bold cyan");    b.append(f"{REPO_URL}\n", style="bold blue")
-        b.append("© 2025 - Developed by: ", style="bold cyan"); b.append("Purple Shiva Team 🔱", style="bold magenta")
+        b.append("© 2025 - Developed by: ", style="bold cyan"); b.append("Gianluca Nunes", style="bold magenta")
         panel = Panel(
             b,
             title="[bold white] Purple Shiva Tools",
