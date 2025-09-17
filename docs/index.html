@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Purple Shiva Tools</title>
+  <link rel="icon" type="image/png" href="img/logo.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="img/logo.png" alt="Logo" width="40" height="40" class="me-2">
+        <span class="fw-bold">Purple Shiva Tools</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
+          <li class="nav-item"><a class="nav-link" href="#install">Install</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header id="home" class="vh-100 hero-section">
+    <canvas id="heroCanvas"></canvas>
+    <div class="container hero-content">
+      <h1 class="hero-title">Purple Shiva Tools</h1>
+      <p class="hero-subtitle">Open Source Cybersec toolkit based on Metasploit but focused on network core concepts.
+      </p>
+      <a href="#about" class="hero-btn btn btn-lg">Learn More</a>
+    </div>
+  </header>
+
+  <section id="about" class="py-5">
+    <div class="container text-center">
+      <h2 class="mb-4">About <span class="text-purple">Purple Shiva Tools</span></h2>
+      <p class="lead mb-5">
+        An <span class="text-purple">open-source cybersecurity toolkit</span> inspired by Metasploit,
+        designed for hands-on learning of <span class="text-purple">network security concepts</span>.
+      </p>
+
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-4 d-flex">
+          <div class="feature-card p-5 h-100">
+            <div class="icon-circle mb-3">
+              <i class="bi bi-grid-3x3-gap-fill feature-icon"></i>
+            </div>
+            <h5>Modular Tools</h5>
+            <p>Organized, easy-to-use modules for experimentation and learning.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4 d-flex">
+          <div class="feature-card p-5 h-100">
+            <div class="icon-circle mb-3">
+              <i class="bi bi-book-half feature-icon"></i>
+            </div>
+            <h5>Educational Focus</h5>
+            <p>Step-by-step examples and structured approaches for clarity.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4 d-flex">
+          <div class="feature-card p-5 h-100">
+            <div class="icon-circle mb-3">
+              <i class="bi bi-shield-lock feature-icon"></i>
+            </div>
+            <h5>Network Core Concepts</h5>
+            <p>Practice real network security techniques safely and effectively.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery" class="gallery-section">
+    <div class="container">
+      <h2 class="section-title">Toolkit Gallery</h2>
+
+      <div class="filter-buttons">
+        <button class="filter-btn all active" data-filter="all">All</button>
+        <button class="filter-btn red" data-filter="red">Red Team</button>
+        <button class="filter-btn blue" data-filter="blue">Blue Team</button>
+      </div>
+
+      <div class="gallery-grid">
+
+        <div class="gallery-item all" data-title="Main menu" data-desc="Main menu where you select and see all tools."
+          data-img="./img/menu.png">
+          <img src="./img/menu.png" alt="Main menu">
+          <div class="overlay">
+            <h3>Main menu</h3>
+            <p>Purple Shiva Tools - Main menu</p>
+          </div>
+        </div>
+
+        <div class="gallery-item all" data-title="Manual example"
+          data-desc="Manual example from Ping Sweep" data-img="./img/manual.png">
+          <img src="./img/manual.png" alt="Manual example">
+          <div class="overlay">
+            <h3>Manual</h3>
+            <p>Purple Shiva Tools - Manual command</p>
+          </div>
+        </div>
+
+        <div class="gallery-item all" data-title="Help from main menu"
+          data-desc="Help from main menu where you can see all commands." data-img="./img/help.png">
+          <img src="./img/help.png" alt="Help from main menu">
+          <div class="overlay">
+            <h3>Help command</h3>
+            <p>Purple Shiva Tools - Help command</p>
+          </div>
+        </div>
+
+        <div class="gallery-item red" data-title="DNS Flood" data-desc="DNS Flood tool used to cause a DOS inside a network."
+          data-img="./img/dnsflood.png">
+          <img src="./img/dnsflood.png" alt="DNS Flood">
+          <div class="overlay">
+            <h3>DNS Flood</h3>
+            <p>Red Team - DNS Flood</p>
+          </div>
+        </div>
+
+        <div class="gallery-item blue" data-title="ARP Scan"
+          data-desc="ARP Scan tool used to find hosts inside a network." data-img="./img/arpscan.png">
+          <img src="./img/arpscan.png" alt="ARP Scan tool">
+          <div class="overlay">
+            <h3>ARP Scan</h3>
+            <p>Blue Team - ARP Scan</p>
+          </div>
+        </div>
+
+        <div class="gallery-item blue" data-title="Ping Sweep"
+          data-desc="Ping Sweep tool used to find hosts inside a network." data-img="./img/pingsweep.png">
+          <img src="./img/pingsweep.png" alt="Ping Sweep tool">
+          <div class="overlay">
+            <h3>Ping Sweep</h3>
+            <p>Blue Team - Ping Sweep</p>
+          </div>
+        </div>
+
+        <div class="gallery-item blue" data-title="Port Scan"
+          data-desc="Port Scan tool used to find open ports from a specific hotst." data-img="./img/portscan.png">
+          <img src="./img/portscan.png" alt="Port Scan tool">
+          <div class="overlay">
+            <h3>Port Scan</h3>
+            <p>Blue Team - Port Scan</p>
+          </div>
+        </div>
+
+        <div class="gallery-item blue" data-title="Vulnerability Services"
+          data-desc="Vulnerability Services tool used to find known vulnerabilities from a specific host."
+          data-img="./img/vulnservices.png">
+          <img src="./img/vulnservices.png" alt="Vulnerability Services tool">
+          <div class="overlay">
+            <h3>Vulnerability Services</h3>
+            <p>Blue Team - Vulnerability Services</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div id="lightbox" class="lightbox">
+    <span class="lightbox-close">&times;</span>
+    <img class="lightbox-img" src="" alt="Full Image">
+  </div>
+
+  <footer class=" text-center py-3 bg-dark text-light">
+    <p class="mb-0">© 2025 - Gianluca Nunes - Purple Shiva Tools</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+
+</html>
