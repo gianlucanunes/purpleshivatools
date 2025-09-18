@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purple Shiva Tools</title>
+    <link rel="icon" type="image/png" href="img/logo.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/docs.css">
+    <link rel="stylesheet" href="./css/docsMedia.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="img/logo.png" alt="Logo" width="40" height="40" class="me-2">
+                <span class="fw-bold">Purple Shiva Tools</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="./index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./index.html#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./index.html#gallery">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#docs">Docs</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header id="docs" class="vh-75 hero-section">
+        <div class="container hero-content">
+            <h1 class="hero-title">Purple Shiva Tools Docs</h1>
+            <p class="hero-subtitle">Learn how to install, use, and master our lightweight cybersec toolkit.</p>
+            <a href="#intro" class="hero-btn btn btn-lg">Get Started</a>
+        </div>
+    </header>
+
+
+    <main class="docs-container container py-5">
+        <!-- Sidebar -->
+        <aside class="docs-sidebar mb-4">
+            <nav>
+                <ul>
+                    <li><a href="#intro" class="active">Introduction</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#installation">Installation</a></li>
+                    <li><a href="#requirements">Requirements</a></li>
+                    <li><a href="#dnsflood">DNS Flood</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Content -->
+        <section class="docs-content flex-grow-1">
+            <div class="accordion" id="docsAccordion">
+
+                <!-- Introduction -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingIntro">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#intro">
+                            Introduction
+                        </button>
+                    </h2>
+                    <div id="intro" class="accordion-collapse collapse show" data-bs-parent="#docsAccordion">
+                        <div class="accordion-body">
+                            <p>Purple Shiva Tools is an <strong>open-source cybersec toolkit</strong> based on
+                                <strong>Metasploit</strong>, focused on <strong>network core concepts</strong>. Built to
+                                practice offensive security techniques with clarity and structure. Currently written in
+                                <strong>Python</strong>, with plans to expand to other languages.
+                            </p>
+                            <p><strong>Developed by:</strong> Gianluca Nunes</p>
+                            <p><strong>Status:</strong> Project under development (Alpha V0.3)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Features -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingFeatures">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#features">
+                            Features & Main Tools
+                        </button>
+                    </h2>
+                    <div id="features" class="accordion-collapse collapse" data-bs-parent="#docsAccordion">
+                        <div class="accordion-body">
+                            <h5>Reconnaissance</h5>
+                            <ul>
+                                <li><strong>arpscan</strong> → Scan active hosts on the local network</li>
+                                <li><strong>arpspoof mitm</strong> → ARP spoofing for Man-in-the-Middle attacks</li>
+                                <li><strong>pingsweep</strong> → ICMP ping sweep to map live hosts</li>
+                                <li><strong>portscan</strong> → Discover open ports on target systems</li>
+                                <li><strong>smbenum</strong> → Enumerate SMB shares and services</li>
+                                <li><strong>vulnservices</strong> → Identify vulnerable services on discovered hosts
+                                </li>
+                            </ul>
+                            <h5>Denial of Service (DoS)</h5>
+                            <ul>
+                                <li><strong>arppoison</strong> → ARP cache poisoning attack</li>
+                                <li><strong>dhcpstarvation</strong> → Exhaust DHCP pool to deny IP allocation</li>
+                                <li><strong>dnsflood</strong> → Flood a DNS server with requests</li>
+                            </ul>
+                            <h5>Other Features</h5>
+                            <ul>
+                                <li><strong>Search</strong> → Search for tools by name in an interactive shell</li>
+                                <li><strong>Manual</strong> → Detailed manual for all tools included</li>
+                                <li><strong>Terminal Mode</strong> → Run tools directly from the Linux shell</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Installation -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingInstallation">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#installation">
+                            Installation
+                        </button>
+                    </h2>
+                    <div id="installation" class="accordion-collapse collapse" data-bs-parent="#docsAccordion">
+                        <div class="accordion-body">
+                            <p>Cloning the repository:</p>
+                            <div class="code-block">
+                                <button class="copy-btn" title="Copy">📋</button>
+                                <pre><code>git clone --branch alpha https://github.com/PurpleShivaTeam/purpleshivatools.git</code></pre>
+                            </div>
+
+                            <p>Accessing the files main directory:</p>
+                            <div class="code-block">
+                                <button class="copy-btn" title="Copy">📋</button>
+                                <pre><code>cd /purpleshivatools/src/alpha/v0_3/</code></pre>
+                            </div>
+
+                            <p>Installing the requirements:</p>
+                            <div class="code-block">
+                                <button class="copy-btn" title="Copy">📋</button>
+                                <pre><code>pip install -r requirements.txt --break-system-packages</code></pre>
+                            </div>
+
+                            <p>Running the toolkit:</p>
+                            <div class="code-block">
+                                <button class="copy-btn" title="Copy">📋</button>
+                                <pre><code>python3 bootstrap.py</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Requirements -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingRequirements">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#requirements">
+                            Requirements
+                        </button>
+                    </h2>
+                    <div id="requirements" class="accordion-collapse collapse" data-bs-parent="#docsAccordion">
+                        <div class="accordion-body">
+                            <p><strong>Python Version:</strong> 3.13.2 (required)</p>
+                            <p>Before using Purple Shiva Tools, ensure the following modules are installed:</p>
+                            <ul>
+                                <li><strong>scapy</strong> - For network scanning and crafting packets.</li>
+                                <li><strong>reportlab</strong> - To generate PDF reports of results or logs.</li>
+                                <li><strong>setuptools</strong> - Standard Python packaging tool for managing
+                                    dependencies.</li>
+                                <li><strong>pyperclip</strong> - Enables copying text to the clipboard.</li>
+                                <li><strong>paramiko</strong> - Handles SSH connections for remote network testing.</li>
+                                <li><strong>rich ≥13.0.0</strong> - Enhances console output with colors, tables, and
+                                    formatting.</li>
+                                <li><strong>ipaddress</strong> - Utilities to manipulate and validate IP addresses.</li>
+                                <li><strong>keyboard</strong> - Allows interactive keyboard input for tools.</li>
+                            </ul>
+                            <p><em>Note:</em> All of these modules are standard Python libraries used for networking,
+                                reporting, and usability. They do <strong>not</strong> contain malware and are safe to
+                                install from PyPI.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DNS Flood Accordion -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingDnsflood">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#dnsflood">
+                            DNS Flood
+                        </button>
+                    </h2>
+                    <div id="dnsflood" class="accordion-collapse collapse" data-bs-parent="#docsAccordion">
+                        <div class="accordion-body">
+
+                            <!-- DNS Basics -->
+                            <h5>DNS Basics</h5>
+                            <p>The <strong>Domain Name System (DNS)</strong> maps domain names (e.g.
+                                <code>example.com</code>) to IP
+                                addresses (e.g. <code>93.184.216.34</code>). DNS servers receive queries and return
+                                responses; some
+                                query types (for example <code>ANY</code> or <code>TXT</code>) often produce much larger
+                                responses
+                                than a simple <code>A</code> record request.
+                            </p>
+                            <p>Two properties are important for understanding amplification attacks:</p>
+                            <ul>
+                                <li><strong>Response size:</strong> Some queries yield much larger payloads (more
+                                    bytes).</li>
+                                <li><strong>Caching:</strong> If a server has the answer cached it won't generate extra
+                                    upstream traffic — cache-busting (random subdomains) forces fresh responses.</li>
+                            </ul>
+
+                            <hr>
+
+                            <!-- DNS Flood Tool -->
+                            <h5>DNS Flood Tool</h5>
+                            <p>This tool is an educational simulator that sends many DNS queries to configured servers.
+                                It supports</p>
+                            <ul>
+                                <li><strong>amplification techniques</strong> (use of <code>ANY</code>/<code>TXT</code>
+                                    and larger-response domains),</li>
+                                <li><strong>random subdomains</strong> to bypass caching, and</li>
+                                <li><strong>optional IP spoofing</strong> (root required) where the tool forges source
+                                    IPs.</li>
+                            </ul>
+
+                            <h6>How the <em>spoofing</em> option works (LAN-focused)</h6>
+                            <p>When <code>--spoof TARGET_IP</code> is enabled the tool attempts to forge source IPs that
+                                look like they're from the same local networks (LAN subnets) related to the DNS servers
+                                you target. It does this because:</p>
+                            <ul>
+                                <li><strong>Practicality:</strong> Responses are more likely to be routed/accepted if
+                                    the source IP is plausible for that network segment.</li>
+                                <li><strong>Realistic simulation:</strong> Using LAN subnets simulates attackers who
+                                    forge addresses within victim/neighbor ranges.</li>
+                            </ul>
+                            <p>Implementation notes (what the code does):</p>
+                            <ul>
+                                <li>The tool derives common LAN subnets from the DNS server IPs (e.g.
+                                    <code>192.168.x.0/24</code>, <code>10.0.0.0/8</code>, <code>172.16.0.0/12</code>).
+                                </li>
+                                <li>It randomly generates source IPs inside those subnets and uses them when building
+                                    spoofed IP/UDP packets.</li>
+                                <li>This is a <strong>simulation</strong> mechanism and still requires raw sockets
+                                    (root) to send forged IP packets.</li>
+                            </ul>
+
+                            <h6>What "amplification" actually affects</h6>
+                            <p>“Amplification” here refers to <strong>the ratio between response size and request
+                                    size</strong> — i.e., how many bytes the server returns for each query. Important
+                                clarifications:</p>
+                            <ul>
+                                <li><strong>Amplification increases bandwidth (bytes/sec):</strong> If a single query
+                                    generates a 2,000-byte reply instead of a 60-byte reply, the victim receives far
+                                    more traffic in bytes even if the number of packets is similar.</li>
+                                <li><strong>Packet count vs bytes:</strong> amplification often increases the average
+                                    response size (bytes), not necessarily the number of UDP packets per response. A few
+                                    large responses can saturate bandwidth as effectively (or more) than many small
+                                    packets.</li>
+                                <li><strong>Cache-busting increases responses:</strong> Using random subdomains causes
+                                    the DNS server to perform a fresh resolution and return a response instead of
+                                    replying from cache — that increases the *number* of responses the server sends (and
+                                    therefore to the victim when spoofing), multiplying the bandwidth effect further.
+                                </li>
+                            </ul>
+
+                            <hr>
+
+                            <h6>How it works (step-by-step)</h6>
+                            <ol>
+                                <li>Select one or more DNS servers as targets.</li>
+                                <li>Generate query domain (optionally random subdomain + known large-response domain).
+                                </li>
+                                <li>Choose query type (A, TXT, ANY) — weighted selection used for greater amplification
+                                    when enabled.</li>
+                                <li>Create DNS query packet and send it (either normal UDP or raw spoofed packet if
+                                    <code>--spoof</code> is used).
+                                </li>
+                                <li>Track progress (packets sent, failures) and periodically update the progress
+                                    display.</li>
+                            </ol>
+
+                            <h6>Parameters</h6>
+                            <ul>
+                                <li><code>dns_servers</code>: List of target DNS server IPs (e.g.,
+                                    <code>192.168.0.1 192.168.0.2</code>).
+                                </li>
+                                <li><code>-d, --duration</code>: Duration in seconds (default: 120).</li>
+                                <li><code>-r, --rate</code>: Queries per second per thread (default: 1000).</li>
+                                <li><code>-t, --threads</code>: Number of worker threads (default: 10).</li>
+                                <li><code>--no-amplification</code>: Disable amplification (only A queries).</li>
+                                <li><code>--spoof TARGET_IP</code>: Enable source IP spoofing simulation (requires
+                                    root). Spoofed source IPs are generated within LAN subnets derived from the target
+                                    DNS server addresses.</li>
+                                <li><code>--no-any</code>: Disable <code>ANY</code> queries.</li>
+                                <li><code>--no-txt</code>: Disable <code>TXT</code> queries.</li>
+                                <li><code>--no-random</code>: Disable random subdomains (use fixed domains).</li>
+                                <li><code>-v, --verbose</code>: Show debugging information.</li>
+                                <li><code>-s, --silent</code>: Minimal output (progress suppressed).</li>
+                            </ul>
+
+                            <h6>Example command:</h6>
+                            <div class="code-block">
+                                <button class="copy-btn">📋</button>
+                                <pre><code>python3 dnsflood.py 192.168.0.1 192.168.0.2 -d 60 -r 1000 -t 10 --verbose</code></pre>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+
+
+    <footer class="footer text-center">
+        <div class="footer-content">
+            <p class="mb-2">© 2025 - Gianluca Nunes - Purple Shiva Tools</p>
+            <div class="footer-icons">
+                <a href="https://github.com/gianlucanunes/purpleshivatools" target="_blank" aria-label="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/gianluca-nunes" target="_blank" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./js/docs.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,134 @@
+/* Small devices adjustments */
+@media (max-width: 576px) {
+  /* Filter buttons too close */
+  .filter-btn {
+    padding: 6px 14px;
+    margin: 6px 4px;
+    font-size: 0.85rem;
+  }
+
+  /* Navbar logo and text */
+  .navbar-brand img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .navbar-brand span {
+    font-size: 1rem;
+  }
+
+  /* Fix hamburger below logo */
+  .navbar {
+    padding: 0.5rem 1rem;
+  }
+
+  .navbar-brand {
+    flex: 1;
+  }
+
+  .navbar-toggler {
+    margin-left: auto;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 400px) {
+  .navbar-brand span {
+    font-size: 0.9rem;
+  }
+
+  .filter-btn {
+    padding: 5px 10px;
+    margin: 4px 3px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Docs page responsiveness */
+@media (max-width: 992px) {
+  .docs-container {
+    flex-direction: column;
+    padding: 2rem 1rem;
+  }
+
+  /* Sidebar becomes top nav / collapsible */
+  .docs-sidebar {
+    flex: 1 1 auto;
+    position: relative; /* no sticky on small screens */
+    top: auto;
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 1rem;
+    padding-right: 0;
+    padding-bottom: 1rem;
+  }
+
+  .docs-sidebar ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .docs-sidebar li {
+    margin-bottom: 0;
+  }
+
+  .docs-sidebar a {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+
+  .docs-content {
+    flex-grow: 1;
+  }
+}
+
+/* Very small screens / phones */
+@media (max-width: 576px) {
+  .docs-container {
+    padding: 1rem;
+  }
+
+  .docs-sidebar ul {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .docs-sidebar a {
+    font-size: 0.85rem;
+    padding: 4px 8px;
+  }
+
+  .accordion-button {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .accordion-body {
+    font-size: 0.85rem;
+  }
+
+  .docs-content pre {
+    font-size: 0.8rem;
+  }
+
+  .code-block .copy-btn {
+    font-size: 0.8rem;
+    padding: 0.15rem 0.4rem;
+  }
+}
+
+@media (max-width: 992px) {
+    .docs-sidebar {
+        display: none; /* hidden by default, toggled with JS */
+        flex-direction: column;
+        width: 100%;
+        border-bottom: 1px solid #ddd;
+        margin-bottom: 1rem;
+    }
+
+    .docs-sidebar.show {
+        display: flex;
+    }
+}

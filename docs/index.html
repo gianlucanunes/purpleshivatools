@@ -9,7 +9,9 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/media.css">
 </head>
 
 <body>
@@ -27,7 +29,7 @@
           <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
           <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
-          <li class="nav-item"><a class="nav-link" href="#install">Install</a></li>
+          <li class="nav-item"><a class="nav-link" href="./docs.html">Docs</a></li>
         </ul>
       </div>
     </div>
@@ -106,8 +108,8 @@
           </div>
         </div>
 
-        <div class="gallery-item all" data-title="Manual example"
-          data-desc="Manual example from Ping Sweep" data-img="./img/manual.png">
+        <div class="gallery-item all" data-title="Manual example" data-desc="Manual example from Ping Sweep"
+          data-img="./img/manual.png">
           <img src="./img/manual.png" alt="Manual example">
           <div class="overlay">
             <h3>Manual</h3>
@@ -124,8 +126,8 @@
           </div>
         </div>
 
-        <div class="gallery-item red" data-title="DNS Flood" data-desc="DNS Flood tool used to cause a DOS inside a network."
-          data-img="./img/dnsflood.png">
+        <div class="gallery-item red" data-title="DNS Flood"
+          data-desc="DNS Flood tool used to cause a DOS inside a network." data-img="./img/dnsflood.png">
           <img src="./img/dnsflood.png" alt="DNS Flood">
           <div class="overlay">
             <h3>DNS Flood</h3>
@@ -179,9 +181,22 @@
     <img class="lightbox-img" src="" alt="Full Image">
   </div>
 
-  <footer class=" text-center py-3 bg-dark text-light">
-    <p class="mb-0">© 2025 - Gianluca Nunes - Purple Shiva Tools</p>
+  <footer class="footer text-center">
+    <div class="footer-content">
+      <p class="mb-2">© 2025 - Gianluca Nunes - Purple Shiva Tools</p>
+      <div class="footer-icons">
+        <a href="https://github.com/gianlucanunes/purpleshivatools" target="_blank" aria-label="GitHub">
+          <i class="fab fa-github"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/gianluca-nunes" target="_blank" aria-label="LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </div>
+    </div>
   </footer>
+
+
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/script.js"></script>

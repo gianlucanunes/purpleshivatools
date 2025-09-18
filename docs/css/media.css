@@ -1,0 +1,45 @@
+/* Small devices adjustments */
+@media (max-width: 576px) {
+  /* Filter buttons too close */
+  .filter-btn {
+    padding: 6px 14px;
+    margin: 6px 4px;
+    font-size: 0.85rem;
+  }
+
+  /* Navbar logo and text */
+  .navbar-brand img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .navbar-brand span {
+    font-size: 1rem;
+  }
+
+  /* Fix hamburger below logo */
+  .navbar {
+    padding: 0.5rem 1rem;
+  }
+
+  .navbar-brand {
+    flex: 1;
+  }
+
+  .navbar-toggler {
+    margin-left: auto;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 400px) {
+  .navbar-brand span {
+    font-size: 0.9rem;
+  }
+
+  .filter-btn {
+    padding: 5px 10px;
+    margin: 4px 3px;
+    font-size: 0.8rem;
+  }
+}
